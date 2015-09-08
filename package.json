@@ -1,0 +1,21 @@
+{
+    "name": "LivingPokedexCompletion",
+    "description": "Living Pokedex Checklist with Live-Refreshes and the ability to import PKHeX CSVs",
+    "version": "0.1.0",
+    "author": {
+        "name": "d4mation-",
+        "email": "eric.defore@gmail.com"
+    },
+    "main": "./pokedex",
+    "dependencies": {
+        "express.io": "*",
+        "mongoose": "*",
+        "mongodb": "*",
+        "request": "*",
+        "socket.io-stream": "*",
+        "fast-csv": "*",
+        "bcrypt": "*",
+        "http": "*",
+        "mkdirp": "*"
+    }
+}

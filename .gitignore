@@ -1,0 +1,5 @@
+.codio
+genghis.rb
+node_modules/*
+assets/images/sprites/*
+!assets/images/sprites/default.png
