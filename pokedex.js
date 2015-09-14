@@ -319,7 +319,7 @@ db.once( 'open', function() {
                 // Creates the nationalDex.csv of a Blank Slate if one doesn't already exist
                 
                 var exists = require( './existsSync.js' );
-                var downloadDest = './nationalDex.csv';
+                var downloadDest = __dirname + '/nationalDex.csv';
                 var destDir = downloadDest.substring( 0, downloadDest.lastIndexOf( '/' ) );
 
                 if ( exists( downloadDest ) === false ) {
