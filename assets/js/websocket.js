@@ -3,24 +3,29 @@ console.todo = console.info;
 io = io.connect();
 
 var loginData = {
-    psudoUserId: Math.round( Math.random() * 1999999999999 * Math.random() ),
     room:  'pokedexLobby',
 }
 // Emit ready event with room name.
 
-io.emit( 'ready', loginData );
-
 ss.forceBase64 = true; // Necessary to properly stream to the server
 
-$( 'form' ).submit( function( event ) {
+io.emit( 'ready', loginData );
 
-    event.preventDefault(); // Allows Forms to Validate, but doesn't force a Refresh of the page on Submission
+io.on( 'getPokedex', function() {
+
+    $( '#database_modal' ).modal( 'show' );
+
+} );
+
+io.on( 'pokedexCreated', function() {
+
+    io.emit( 'ready', loginData );
+
+    $( '#database_modal' ).modal( 'hide' );
 
 } );
 
 io.on( 'pokedexList', function( pokedex ) {
-
-    console.log( 'websocket got pokedexList' );
 
     var box = '';
 
@@ -97,40 +102,9 @@ io.on( 'pokedexList', function( pokedex ) {
 
 });
 
-$( document ).on( 'click', '.edit-pokedex-entry', function( event ) {
+$( 'form' ).submit( function( event ) {
 
-    event.preventDefault();
-
-    var dexNumber = $( this ).data( 'id' );
-
-    io.emit( 'editPokedexEntry', dexNumber );
-
-} );
-
-io.on( 'pokedexEntryDetails', function( data ) {
-
-    console.log( 'websocket got pokedexEntryDetails' );
-
-    $( '#pokedex_entry_modal .modal-title' ).text( 'Edit ' + data.pokemon );
-
-    $( '#pokedex_entry_modal .sprite' ).attr( 'src', '/images/sprites/' + data.no + '.png' );
-
-    ( ( data.caught === true ) ? $( '#pokedex_entry_modal [name="pokedex_caught"]' ).bootstrapSwitch( 'state', true, false ) : $( '#pokedex_entry_modal [name="pokedex_caught"]' ).bootstrapSwitch( 'state', false, false ) );
-
-    $( '#pokedex_entry_modal .btn.save' ).data( 'id', data._id );
-
-    $( '#pokedex_entry_modal' ).modal( 'show' );
-
-} );
-
-$( document ).on( 'click', '#pokedex_entry_modal .btn.save', function() {
-
-    var data = {
-        id: $( '#pokedex_entry_modal .btn.save' ).data( 'id' ),
-        caught: $( '#pokedex_entry_modal [name="pokedex_caught"]' ).bootstrapSwitch( 'state' ),
-    };
-
-    io.emit( 'updatePokedexEntry', data );
+    event.preventDefault(); // Allows Forms to Validate, but doesn't force a Refresh of the page on Submission
 
 } );
 
@@ -144,32 +118,12 @@ $( document ).on( 'click', '#login', function( event ) {
 
 $( document ).on( 'click', '#login_modal .btn.login', function() {
 
-
-
     var data = {
         username: $( '#login_modal .username' ).val(),
         password: $( '#login_modal .password' ).val(),
     };
 
     io.emit( 'su', data );
-
-} );
-
-$( '#pokedex_entry_modal' ).on( 'hidden.bs.modal', function () {
-
-    $( '#pokedex_entry_modal .btn.save' ).data( 'id', '' ); // Clear out ID to prevent mistakes/abuse
-
-} );
-
-$( '#login_modal, #edit_user_modal, #csv_import_modal' ).on( 'hidden.bs.modal', function () {
-
-    $( this ).find( 'form' )[0].reset(); // Clear out inputs to prevent mistakes/abuse
-
-} );
-
-io.on( 'pokemonUpdated', function( data ) {
-
-    updatePokedexDisplay( data.no, data.caught );
 
 } );
 
@@ -201,6 +155,18 @@ io.on( 'logoutComplete', function() {
     
     $( 'body' ).removeClass( 'admin' );
 
+} );
+
+io.on( 'suFailure', function() {
+
+    console.log( 'unsuccessful login' );
+
+} );
+
+io.on( 'niceTry', function() {
+
+    alert( 'Nice Try' );
+    
 } );
 
 $( document ).on( 'click', '#edit_user', function( event ) {
@@ -240,16 +206,51 @@ io.on( 'userUpdated', function( data ) {
 
 } );
 
-io.on( 'suFailure', function() {
+$( document ).on( 'click', '.edit-pokedex-entry', function( event ) {
 
-    console.log( 'unsuccessful login' );
+    event.preventDefault();
+
+    var dexNumber = $( this ).data( 'id' );
+
+    io.emit( 'editPokedexEntry', dexNumber );
 
 } );
 
-io.on( 'niceTry', function() {
+io.on( 'pokedexEntryDetails', function( data ) {
 
-    alert( 'Nice Try' );
-    
+    $( '#pokedex_entry_modal .modal-title' ).text( 'Edit ' + data.pokemon );
+
+    $( '#pokedex_entry_modal .sprite' ).attr( 'src', '/images/sprites/' + data.no + '.png' );
+
+    ( ( data.caught === true ) ? $( '#pokedex_entry_modal [name="pokedex_caught"]' ).bootstrapSwitch( 'state', true, false ) : $( '#pokedex_entry_modal [name="pokedex_caught"]' ).bootstrapSwitch( 'state', false, false ) );
+
+    $( '#pokedex_entry_modal .btn.save' ).data( 'id', data._id );
+
+    $( '#pokedex_entry_modal' ).modal( 'show' );
+
+} );
+
+$( document ).on( 'click', '#pokedex_entry_modal .btn.save', function() {
+
+    var data = {
+        id: $( '#pokedex_entry_modal .btn.save' ).data( 'id' ),
+        caught: $( '#pokedex_entry_modal [name="pokedex_caught"]' ).bootstrapSwitch( 'state' ),
+    };
+
+    io.emit( 'updatePokedexEntry', data );
+
+} );
+
+io.on( 'pokemonUpdated', function( data ) {
+
+    updatePokedexDisplay( data.no, data.caught );
+
+} );
+
+$( '#pokedex_entry_modal' ).on( 'hidden.bs.modal', function () {
+
+    $( '#pokedex_entry_modal .btn.save' ).data( 'id', '' ); // Clear out ID to prevent mistakes/abuse
+
 } );
 
 $( document ).on( 'click', '#import', function( event ) {
@@ -304,6 +305,12 @@ io.on( 'pokedexImported', function() {
     $( '#csv_import_modal' ).modal( 'hide' );
 
     $( '#csv_import_modal .btn.import' ).val( 'Import' ).attr( 'disabled', false );
+
+} );
+
+$( '#login_modal, #edit_user_modal, #csv_import_modal' ).on( 'hidden.bs.modal', function () {
+
+    $( this ).find( 'form' )[0].reset(); // Clear out inputs to prevent mistakes/abuse
 
 } );
 
@@ -414,17 +421,3 @@ function whichGeneration( nationalDex ) {
     return pokemonGeneration;
 
 }
-
-io.on( 'getPokedex', function() {
-
-    $( '#database_modal' ).modal( 'show' );
-
-} );
-
-io.on( 'pokedexCreated', function() {
-
-    io.emit( 'ready', loginData );
-
-    $( '#database_modal' ).modal( 'hide' );
-
-} );

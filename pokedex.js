@@ -34,16 +34,6 @@ var hasStartedDownloading = setInterval( function() {
 var dpm = 0;
 var dt = 0;
 
-var PseudoGuid = new (function() {
-    this.empty = "00000000-0000-0000-0000-000000000000";
-    this.GetNew = function() {
-        var fourChars = function() {
-            return (((1 + Math.random()) * 0x10000)|0).toString(16).substring(1).toUpperCase();
-        };
-        return (fourChars() + fourChars() + "-" + fourChars() + "-" + fourChars() + "-" + fourChars() + "-" + fourChars() + fourChars() + fourChars());
-    };
-})();
-
 function mkdir_p( path, cb ){
     var mkdirp = require( 'mkdirp' );
     var cb1 = cb;
@@ -84,8 +74,8 @@ db.once( 'open', function() {
 
     });
 
-    // Compile a 'User' model using the movieSchema as the structure.
-    // Mongoose also creates a MongoDB collection called 'User' for these documents.
+    // Compile a 'User' model using the userSchema as the structure.
+    // Mongoose also creates a MongoDB collection called 'users' for these documents.
     var User = mongoose.model( 'users', userSchema );
 
     app.io.route( 'su', function( req ) {
