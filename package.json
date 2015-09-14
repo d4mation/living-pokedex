@@ -1,7 +1,7 @@
 {
     "name": "LivingPokedexCompletion",
     "description": "Living Pokedex Checklist with Live-Refreshes and the ability to import PKHeX CSVs",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "author": {
         "name": "d4mation-",
         "email": "eric.defore@gmail.com"
