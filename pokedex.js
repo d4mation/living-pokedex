@@ -388,8 +388,7 @@ db.once( 'open', function() {
             pokemon.caught = req.data.caught;
             pokemon.save();
 
-            req.io.emit( 'pokemonUpdated', pokemon ); // Emit to current user
-            req.io.room( req.data.room ).broadcast( 'pokemonUpdated', pokemon ); // Broadcasts to other clients the changes
+            app.io.sockets.emit( 'pokemonUpdated', pokemon ); // Send Changes to Everyone Connected
 
         } );
 
@@ -456,8 +455,7 @@ db.once( 'open', function() {
                         PokemonEntry.update( { _id: pokemon._id }, { caught: true }, function( err, status ) {
                             if ( err ) return console.error( err );
 
-                            socket.emit( 'pokedexEntryImported', pokemon, true ); // Emits to current socket
-                            socket.broadcast.to( room ).emit( 'pokedexEntryImported', pokemon, true ); // Broadcasts to other clients the changes
+                            app.io.sockets.emit( 'pokedexEntryImported', pokemon, true ); // Send Changes to Everyone Connected
 
                         } );
 
