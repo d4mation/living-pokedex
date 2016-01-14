@@ -151,7 +151,7 @@ io.on( 'logoutComplete', function() {
 
     console.log( 'sucessful logout' );
 
-    $( '#admin_controls' ).html( '<li><a href = "#" id = "login">Login</a></li>' );
+    $( '#admin_controls' ).html( '<li><a href = "#" id = "login">Admin Login</a></li>' );
     
     $( 'body' ).removeClass( 'admin' );
 
