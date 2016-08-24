@@ -1,0 +1,3 @@
+[submodule "includes/PokeEditor"]
+	path = includes/PokeEditor
+	url = git@github.com:DarkNikGr/PokeEditor.git

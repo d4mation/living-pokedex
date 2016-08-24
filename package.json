@@ -1,21 +1,46 @@
 {
     "name": "LivingPokedexCompletion",
-    "description": "Living Pokedex Checklist with Live-Refreshes and the ability to import PKHeX CSVs",
-    "version": "0.1.1",
+    "description": "Living Pokedex Checklist with Live-Refreshes and the ability to import Unencrypted Save Files",
+    "version": "1.0.0",
     "author": {
-        "name": "d4mation-",
+        "name": "d4mation",
         "email": "eric.defore@gmail.com"
     },
-    "main": "./pokedex",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/d4mation/Living-Pokedex-Completion-Tracker.git"
+    },
+    "main": "./pokedex.js",
     "dependencies": {
-        "express.io": "*",
+        "express.io": "^1.1.13",
         "mongoose": "*",
         "mongodb": "*",
-        "request": "*",
-        "socket.io-stream": "*",
+        "request": "^2.74.0",
+        "socket.io-stream": "^0.9.0",
         "fast-csv": "*",
-        "bcrypt": "*",
-        "http": "*",
-        "mkdirp": "*"
+        "bcrypt": "^0.8.7",
+        "http": "^0.0.0",
+        "mkdirp": "^0.5.1",
+        "cuint": "^0.2.2"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.0",
+        "gulp-autoprefixer": "^3.1.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-load-plugins": "^1.1.0",
+        "gulp-notify": "^2.2.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-sass": "^2.1.0",
+        "gulp-sourcemaps": "^1.6.0",
+        "gulp-cssnano": "^2.1.1",
+        "gulp-babel": "^6.1.2",
+        "gulp-uglify": "^1.5.3",
+        "require-dir": "^0.3.0",
+        "run-sequence": "^1.1.5",
+        "browser-sync": "^2.10.0",
+        "yargs": "^4.1.0",
+        "js-yaml": "^3.5.4",
+        "gulp-plumber": "^1.1.0",
+        "babel-preset-es2015": "^6.9.0"
     }
 }

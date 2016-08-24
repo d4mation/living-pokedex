@@ -1,0 +1,80 @@
+browsersync:
+  notify: true
+  open: false
+  port: 3000
+  server:
+    basedir: "."
+  xip: false
+  
+revision:
+  revision:
+    dest: "./assets"
+    manifest:
+      dest: "./"
+    src:
+      - "./assets/css/style.css"
+      - "./assets/js/script.js"
+      - "./assets/img/**"
+  collect:
+    dest: "./"
+    src:
+      - "./rev-manifest.json"
+      - "./*.{html,xml,txt,json,css,js,map}"
+      - "!./assets/vendor"
+
+javascript:
+  dest:
+    root: "."
+  front:
+    # filename to output
+    filename: "script.js"
+    notification: "Running JavaScript"
+    # Paths to JavaScript libraries, which are combined into one file
+    bowerPaths:
+      - ""
+    src:
+      # Paths to your own project code are here
+      # All the files in this list and in the js dir are concatenated into script.js
+      - "build/js/**/*.js"
+      - "!build/js/admin/**/*.js"
+      - "!build/js/tinymce/**/*.js"
+  admin:
+    filename: "admin.js"
+    notification: "Running Admin JavaScript"
+    src:
+      - "build/js/admin/**/*.js"
+  server:
+    filename: "server.js"
+    notification: "Running Server JavaScript"
+    src:
+      - "build/js/server/server.js"
+
+sass:
+  # Autoprefixer will make sure your CSS works with these browsers
+  compatibility:
+    - "last 2 versions"
+    - "ie >= 9"
+  dest:
+    root: "."
+  front:
+    filename: "style.css"
+    notification: "Running Sass"
+    src: "build/sass/main.scss"
+  admin:
+    filename: "admin.css"
+    notification: "Running Admin Sass"
+    src: "build/sass/admin/main.scss"
+
+watch:
+  javascript:
+    front:
+      - "build/js/**/*.js"
+      - "!build/js/admin/**/*.js"
+      - "!build/js/tinymce/**/*.js"
+    admin: "build/js/admin/**/*.js"
+    server: "build/js/server/sever.js"
+  sass: 
+    front: 
+      - "build/sass/**/*.scss"
+      - "!build/sass/admin/**/*.scss"
+    admin: "build/sass/admin/**/*.scss"
