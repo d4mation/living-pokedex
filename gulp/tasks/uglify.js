@@ -16,6 +16,7 @@ gulp.task( 'front-uglify', function() {
         .pipe( $.plumber( { errorHandler: onError } ) )
         .pipe( $.sourcemaps.init() )
         .pipe( $.babel( {
+            compact: true,
             presets: ['es2015'] // Gulp-uglify has no official support for ECMAScript 2015 (aka ES6, aka Harmony), so we'll transpile to EcmaScript5
         } ) )
         .pipe( $.concat( config.front.filename ) )
@@ -35,7 +36,9 @@ gulp.task( 'admin-uglify', function() {
     return gulp.src( config.admin.src )
         .pipe( $.plumber( { errorHandler: onError } ) )
         .pipe( $.sourcemaps.init() )
-        .pipe( $.babel() )
+        .pipe( $.babel( {
+            compact: true
+        } ) )
         .pipe( $.concat( config.admin.filename ) )
         .pipe( $.uglify() )
         .pipe( $.sourcemaps.write( '.' ) )
@@ -53,7 +56,9 @@ gulp.task( 'server-uglify', function() {
     return gulp.src( config.server.src )
         .pipe( $.plumber( { errorHandler: onError } ) )
         .pipe( $.sourcemaps.init() )
-        .pipe( $.babel() )
+        .pipe( $.babel( {
+            compact: true
+        } ) )
         .pipe( $.concat( config.server.filename ) )
         .pipe( $.uglify() )
         .pipe( $.sourcemaps.write( '.' ) )
