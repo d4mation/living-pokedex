@@ -5,39 +5,33 @@ browsersync:
   server:
     basedir: "."
   xip: false
-  
-revision:
-  revision:
-    dest: "./assets"
-    manifest:
-      dest: "./"
-    src:
-      - "./assets/css/style.css"
-      - "./assets/js/script.js"
-      - "./assets/img/**"
-  collect:
-    dest: "./"
-    src:
-      - "./rev-manifest.json"
-      - "./*.{html,xml,txt,json,css,js,map}"
-      - "!./assets/vendor"
 
 javascript:
   dest:
-    root: "."
+    root: "./assets/js"
   front:
     # filename to output
     filename: "script.js"
     notification: "Running JavaScript"
     # Paths to JavaScript libraries, which are combined into one file
-    bowerPaths:
-      - ""
+    vendor:
+      - "build/vendor/js/socket.io-stream.js"
+      - "bower_components/foundation-sites/js/foundation.core.js"
+      - "bower_components/foundation-sites/js/foundation.util.keyboard.js"
+      - "bower_components/foundation-sites/js/foundation.util.box.js"
+      - "bower_components/foundation-sites/js/foundation.util.nest.js"
+      - "bower_components/foundation-sites/js/foundation.util.mediaQuery.js"
+      - "bower_components/foundation-sites/js/foundation.util.triggers.js"
+      - "bower_components/foundation-sites/js/foundation.util.motion.js"
+      - "bower_components/foundation-sites/js/foundation.dropdownMenu.js"
+      - "bower_components/foundation-sites/js/foundation.offcanvas.js"
+      - "bower_components/foundation-sites/js/foundation.sticky.js"
+      - "bower_components/foundation-sites/js/foundation.magellan.js"
     src:
       # Paths to your own project code are here
       # All the files in this list and in the js dir are concatenated into script.js
       - "build/js/**/*.js"
       - "!build/js/admin/**/*.js"
-      - "!build/js/tinymce/**/*.js"
   admin:
     filename: "admin.js"
     notification: "Running Admin JavaScript"
@@ -55,10 +49,13 @@ sass:
     - "last 2 versions"
     - "ie >= 9"
   dest:
-    root: "."
+    root: "./assets/css"
   front:
     filename: "style.css"
     notification: "Running Sass"
+    vendor:
+      - "bower_components/foundation-sites/scss"
+      - "bower_components/motion-ui/src"
     src: "build/sass/main.scss"
   admin:
     filename: "admin.css"

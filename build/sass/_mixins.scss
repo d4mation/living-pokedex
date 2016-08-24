@@ -1,0 +1,25 @@
+@mixin light-or-dark-text( $color ) {
+
+    @if lightness( $color ) < 50% {
+
+        color: $light-color;
+
+    }
+    @else {
+
+        color: $dark-color;
+
+    }
+
+}
+
+// Allow hex color to be passed into a Data URI
+@function uri-friendly-color( $color ) {
+    @return '%23' + str-slice( '#{$color}', 2, -1 );
+}
+
+// Convert Hex to RGBA
+@mixin background-opacity( $color, $opacity: 0.3 ) {
+    background: $color; /* The fallback for ancient things */
+    background: rgba( $color, $opacity );
+}

@@ -13,8 +13,10 @@ gulp.task( 'front-sass', function() {
 
     return gulp.src( config.front.src )
         .pipe( $.sourcemaps.init() )
-        .pipe( $.sass()
-          .on( 'error', notify.onError( {
+        .pipe( $.sass( {
+                includePaths: config.front.vendor
+            } )
+            .on( 'error', notify.onError( {
                 title: pkg.name,
                 message: "<%= error.message %>",
             } )

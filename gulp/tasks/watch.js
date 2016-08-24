@@ -5,6 +5,7 @@ var gulp        = require( 'gulp' );
 gulp.task( 'watch', function() {
     gulp.watch( config.javascript.front, ['front-uglify'] );
     gulp.watch( config.javascript.admin, ['admin-uglify'] );
+    gulp.watch( config.javascript.server, ['server-uglify'] );
     gulp.watch( config.sass.front, ['front-sass'] );
     gulp.watch( config.sass.admin, ['admin-sass'] );
 } );
