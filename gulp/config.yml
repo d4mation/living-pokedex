@@ -15,8 +15,6 @@ javascript:
     notification: "Running JavaScript"
     # Paths to JavaScript libraries, which are combined into one file
     vendor:
-      - "build/vendor/js/socket.io-stream.js"
-      - "bower_components/angular/angular.min.js"
       - "bower_components/foundation-sites/js/foundation.core.js"
       - "bower_components/foundation-sites/js/foundation.util.keyboard.js"
       - "bower_components/foundation-sites/js/foundation.util.box.js"
