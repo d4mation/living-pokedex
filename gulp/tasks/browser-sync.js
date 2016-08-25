@@ -2,15 +2,14 @@ var browserSync = require( 'browser-sync' );
 var config      = require( '../util/loadConfig' ).browsersync;
 var gulp        = require( 'gulp' );
 
-gulp.task( 'browser-sync', function() {
+gulp.task( 'browser-sync', ['nodemon'], function() {
     
-  browserSync.init( {
+  browserSync.init( null, {
+    proxy: config.proxy,
+    files: config.files,
     notify: config.notify,
     open: config.open,
     port: config.port,
-    server: {
-      baseDir: config.server.basedir
-    },
     xip: config.xip
   } );
     

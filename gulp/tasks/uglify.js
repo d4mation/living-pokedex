@@ -1,7 +1,6 @@
 var $             = require( 'gulp-load-plugins' )();
 var config        = require( '../util/loadConfig' ).javascript;
 var gulp          = require( 'gulp' );
-var sequence      = require( 'run-sequence' );
 var notify        = require( 'gulp-notify' );
 var fs            = require( 'fs' );
 var pkg           = JSON.parse( fs.readFileSync( './package.json' ) );
@@ -26,7 +25,8 @@ gulp.task( 'front-uglify', function() {
         .pipe( $.plumber.stop() )
         .pipe( notify( {
             title: pkg.name,
-            message: 'JS Complete'
+            message: 'JS Complete',
+            onLast: true
         } ) );
 
 } );
@@ -46,31 +46,11 @@ gulp.task( 'admin-uglify', function() {
         .pipe( $.plumber.stop() )
         .pipe( notify( {
             title: pkg.name,
-            message: 'Admin JS Complete'
+            message: 'Admin JS Complete',
+            onLast: true
         } ) );
 
 } );
 
-gulp.task( 'server-uglify', function() {
-
-    return gulp.src( config.server.src )
-        .pipe( $.plumber( { errorHandler: onError } ) )
-        .pipe( $.sourcemaps.init() )
-        .pipe( $.babel( {
-            compact: true
-        } ) )
-        .pipe( $.concat( config.server.filename ) )
-        .pipe( $.uglify() )
-        .pipe( $.sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( config.dest.root ) )
-        .pipe( $.plumber.stop() )
-        .pipe( notify( {
-            title: pkg.name,
-            message: 'Server JS Complete'
-        } ) );
-
-} );
-
-gulp.task( 'uglify', function( done ) {
-    sequence( 'front-uglify', 'admin-uglify', 'server-uglify', done );
+gulp.task( 'uglify', ['front-uglify', 'admin-uglify'], function( done ) {
 } );

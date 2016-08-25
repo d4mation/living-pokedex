@@ -4,7 +4,6 @@ var config        = require( '../util/loadConfig' ).sass;
 var gulp          = require( 'gulp' );
 var sass          = require( 'gulp-sass' );
 var concat        = require( 'gulp-concat' );
-var sequence      = require( 'run-sequence' );
 var notify        = require( 'gulp-notify' );
 var fs            = require( 'fs' );
 var pkg           = JSON.parse( fs.readFileSync( './package.json' ) );
@@ -28,7 +27,8 @@ gulp.task( 'front-sass', function() {
         .pipe( gulp.dest( config.dest.root ) )
         .pipe( notify( {
             title: pkg.name,
-            message: 'SASS Complete'
+            message: 'SASS Complete',
+            onLast: true
         } ) );
 
 } );
@@ -50,11 +50,11 @@ gulp.task( 'admin-sass', function() {
         .pipe( gulp.dest( config.dest.root ) )
         .pipe( notify( {
             title: pkg.name,
-            message: 'Admin SASS Complete'
+            message: 'Admin SASS Complete',
+            onLast: true
         } ) );
 
 } );
 
-gulp.task( 'sass', function( done ) {
-    sequence( 'front-sass', 'admin-sass', done );
+gulp.task( 'sass', ['front-sass', 'admin-sass'], function( done ) {
 } );
