@@ -5,7 +5,7 @@ browsersync:
   xip: false
   proxy: "http://localhost:3030"
   files: 
-    - "public/**/*.*"
+    - "./public/**/*.*"
   
 nodemon:
   app: './pokedex.js'

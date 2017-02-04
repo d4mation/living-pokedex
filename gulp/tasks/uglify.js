@@ -16,7 +16,8 @@ gulp.task( 'front-uglify', function() {
         .pipe( $.sourcemaps.init() )
         .pipe( $.babel( {
             compact: true,
-            presets: ['es2015'] // Gulp-uglify has no official support for ECMAScript 2015 (aka ES6, aka Harmony), so we'll transpile to EcmaScript5
+            presets: ['es2015'], // Gulp-uglify has no official support for ECMAScript 2015 (aka ES6, aka Harmony), so we'll transpile to EcmaScript5
+			plugins: ["inline-json-import", {}]
         } ) )
         .pipe( $.concat( config.front.filename ) )
         .pipe( $.uglify() )
