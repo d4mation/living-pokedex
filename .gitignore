@@ -2,5 +2,4 @@
 genghis.rb
 node_modules/*
 bower_components/*
-assets/images/sprites/*
 !assets/images/sprites/default.png
